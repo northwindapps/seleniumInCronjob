@@ -88,12 +88,6 @@ for idx, val in enumerate(bidDateList):
     if(bidDateList[idx] == BIDDATE and bidPriceList[idx].isdecimal() == True and len(bidUrlList[idx]) > 0 ):
         options = Options()
         options.headless = True
-        #options.add_argument("--no-sandbox")
-        #options.add_argument("window-size=420,380")
-        #options.add_argument("--headless")
-        #options.add_argument("enable-automation")
-        #options.add_argument("--disable-gpu")
-        #options.add_argument("--disable-dev-shm-usage")
 
         driver = webdriver.Chrome(options=options)
 
