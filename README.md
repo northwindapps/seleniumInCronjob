@@ -1,3 +1,3 @@
 # seleniumInCronjob
 
-Sample code for scraping
+Sample code for web scraping
