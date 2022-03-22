@@ -1,6 +1,7 @@
 # seleniumInCronjob
 
 オークションサイトでの入札作業を自動化するツール
+<h5>機能概要:wishlist.pyで入札アイテムを取得→bid.pyで入札を実行</h5>
 
 <h3>(1).env設定:</h3>
 
