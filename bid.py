@@ -160,12 +160,12 @@ for idx, val in enumerate(bidDateList):
 
         time.sleep(2) #2 second time delay
 
-        bid_confirm_button = driver.find_element_by_xpath("//input[@value='確認する']").click();
-        time.sleep(1) 
+        # bid_confirm_button = driver.find_element_by_xpath("//input[@value='確認する']").click();
+        # time.sleep(1) 
 
         # https://stackoverflow.com/questions/38534241/how-to-locate-a-span-with-a-specific-text-in-selenium-using-java
-        bid_submit_button = driver.find_element_by_xpath("//span[.='入札する']").click();
-        time.sleep(1) 
+        # bid_submit_button = driver.find_element_by_xpath("//span[.='入札する']").click();
+        # time.sleep(1) 
 
         driver.close()
         driver.quit()
