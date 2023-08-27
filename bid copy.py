@@ -99,7 +99,7 @@ for idx, val in enumerate(bidDateList):
         my_password= config["PASS"]
 
         #access facebook login email input
-        email_input_box = driver.find_element_by_name("login")
+        email_input_box = driver.find_element_by_name("login_handle")
 
         #clear the placeholders data
         email_input_box.clear()

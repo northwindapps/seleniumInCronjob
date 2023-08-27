@@ -15,3 +15,7 @@ PASS=パスワード
 ```
 */1 * * * * cd /path/to/the/project/folder && /path/to/python /path/to/scraping/file >> /path/to/log/file 2>&1
 ``` 
+
+app.py
+
+start: gunicorn app:app
