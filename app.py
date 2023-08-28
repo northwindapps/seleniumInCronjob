@@ -40,8 +40,10 @@ def get_price():
         stock_name = request.args.get('stock_name')
         currency = request.args.get('currency')
         other = request.args.get('other')
+        type = request.args.get('type')
         print(stock_name)
         print(currency)
+        print(type)
         now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 
         options = Options()
@@ -49,14 +51,36 @@ def get_price():
         options.add_argument('--headless')
         driver = webdriver.Chrome(options=options)
 
-        driver.get("https://www.google.com/search?q=btc+price+in+usd&sca_esv=560417221&sxsrf=AB5stBhndKHAq6_Xhd6IkMGECmUprMSxew%3A1693108649528&ei=qcnqZIHzH5Xq-AbU34iQCQ&ved=0ahUKEwjB6_uc-fuAAxUVNd4KHdQvApIQ4dUDCA8&uact=5&oq=btc+price+in+usd&gs_lp=Egxnd3Mtd2l6LXNlcnAiEGJ0YyBwcmljZSBpbiB1c2QyChAAGIAEGEYYggIyBRAAGIAEMgUQABiABDIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeMgYQABgWGB4yBhAAGBYYHjIGEAAYFhgeSMwUUKEHWIwScAF4AZABAJgBmQGgAcgGqgEDMC43uAEDyAEA-AEBwgIKEAAYRxjWBBiwA8ICChAAGIoFGLADGEPCAgcQABiKBRhDwgIKEAAYgAQYFBiHAuIDBBgAIEGIBgGQBgo&sclient=gws-wiz-serp")
+        url = "https://www.google.com/search?q="
 
+        query=stock_name + '+stock price' 
 
-        pc_price_tag = driver.find_element(By.CLASS_NAME, 'pclqee2')
+        if other != None:
+            query=query + '+' + other
+
+        url = url + query
+
+        print(url)
+
+        driver.get(url)
+
+        if type == '0':
+            print("crypto")
+            pc_price_tag = driver.find_element(By.CLASS_NAME, 'pclqee')
+
+        elif type == '1':
+            print("stock")
+            pc_price_tag = driver.find_element(By.XPATH, "//span[@jsname='vWLAgc']")
+        else:
+            print("Invalid choice.")
+            pc_price_tag = None
 
         print(pc_price_tag.get_attribute('innerHTML'))
 
+        # if is_float(pc_price_tag.get_attribute('innerHTML')):
         response_data = {"current_value": pc_price_tag.get_attribute('innerHTML')}
+        # else:
+            # response_data = {"current_value": None}
         return jsonify(response_data)
 
     except TimeoutException:
@@ -66,6 +90,11 @@ def get_price():
     except NoSuchElementException:
         print("Element not found. Check if the element selector is correct.")
         response_data = {"current_value": None}
+
+        pc_price_tags = driver.find_elements(By.TAG_NAME,'span')
+        for element in pc_price_tags:
+            print(element)
+
         return jsonify(response_data)
     except TypeError as e:
         print("Caught a TypeError:", e)
@@ -80,5 +109,12 @@ def get_price():
         # Close the browser when done
         driver.quit()
 
+def is_float(string):
+    try:
+        float_value = float(string)
+        return True
+    except ValueError:
+        return False
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
