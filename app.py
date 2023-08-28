@@ -41,9 +41,6 @@ def get_price():
         currency = request.args.get('currency')
         other = request.args.get('other')
         type = request.args.get('type')
-        print(stock_name)
-        print(currency)
-        print(type)
         now = datetime.datetime.now(pytz.timezone('Asia/Tokyo'))
 
         options = Options()
