@@ -32,9 +32,14 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 
 
-app = Flask(__name__)
-CORS(app)
-@app.get("/current_price")
+application= Flask(__name__)
+CORS(application)
+@application.get("/")
+def get_hello():
+    response_data = {"message": "hi"}
+    return jsonify(response_data)
+
+@application.get("/current_price")
 def get_price():
     try:
         stock_name = request.args.get('stock_name')
@@ -114,4 +119,4 @@ def is_float(string):
         return False
     
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    application.run(host="0.0.0.0", port='8000')
