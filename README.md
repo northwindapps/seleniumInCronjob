@@ -21,4 +21,5 @@ app.py
 start: gunicorn app:app
 ps aux |grep gunicorn | awk '{ print $2 }' |xargs kill -HUP
 sudo gunicorn  wsgi
-
+tmux new -s my_session_name
+tmux attach-session -t my_session_name
