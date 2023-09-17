@@ -1,9 +1,11 @@
+import os
+import requests
 #use selenium driver
-from dotenv import dotenv_values
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
 
-config = dotenv_values(".env")
+load_dotenv()
 
 from selenium import webdriver
 
@@ -43,7 +45,7 @@ def get_hello():
 def get_price_plan_b():
     try:
         # Replace these variables with your own values
-        api_key = "replace_it_here"
+        api_key = os.environ.get("API_KEY")
         # stock_symbol = "AAPL"
         interval = "1min"
         stock_symbol = request.args.get('stock_name')
