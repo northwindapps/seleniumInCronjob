@@ -79,6 +79,34 @@ def get_price_plan_b():
         #driver.quit()
 
 
+@application.route("/current_price_crypto_b")
+def get_crypto_price():
+    try:
+        # Replace these variables with your own values
+        api_key = os.environ.get("API_KEY")
+        stock_symbol = request.args.get('stock_name')
+
+        # Construct the API URL for cryptocurrency data
+        url = f"https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_INTRADAY&symbol={stock_symbol}&market=USD&apikey={api_key}"
+
+        # Make the API request
+        response = requests.get(url)
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Extract the current cryptocurrency price (assuming you want the most recent data point)
+        latest_data_point = data["Time Series (Digital Currency Intraday)"]
+        latest_price = latest_data_point[list(latest_data_point.keys())[0]]["1a. price (USD)"]
+
+        print(f"The current price of {crypto_symbol} is ${latest_price}")
+        response_data = {"current_value": latest_price}
+        return jsonify(response_data)
+
+    except Exception as e:
+        print("An error occurred:", e)
+        response_data = {"current_value": None}
+        return jsonify(response_data)
 
 @application.get("/current_price")
 def get_price():
