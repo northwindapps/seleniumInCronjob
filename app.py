@@ -39,6 +39,45 @@ def get_hello():
     response_data = {"message": "hi"}
     return jsonify(response_data)
 
+@application.get("/current_price_b")
+def get_price_plan_b():
+    try:
+        # Replace these variables with your own values
+        api_key = "AUN1ZO2ZXPC9N0JW"
+        # stock_symbol = "AAPL"
+        interval = "1min"
+        stock_symbol = request.args.get('stock_name')
+
+
+        # Construct the API URL
+        url = f"https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={stock_symbol}&interval={interval}&apikey={api_key}"
+
+        # Make the API request
+        response = requests.get(url)
+
+        # Parse the JSON response
+        data = response.json()
+
+        # Extract the current stock price (assuming you want the most recent data point)
+        latest_data_point = data["Time Series ({})".format(interval)]
+        latest_price = latest_data_point[list(latest_data_point.keys())[0]]["4. close"]
+
+        print(f"The current price of {stock_symbol} is ${latest_price}")
+        response_data = {"current_value": latest_price}
+        return jsonify(response_data)
+
+    except Exception as e:
+        print("An error occurred:", e)
+        response_data = {"current_value": None}
+        return jsonify(response_data)
+    
+    finally:
+        print('finally')
+        # Close the browser when done
+        #driver.quit()
+
+
+
 @application.get("/current_price")
 def get_price():
     try:
