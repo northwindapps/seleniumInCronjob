@@ -43,7 +43,7 @@ def get_hello():
 def get_price_plan_b():
     try:
         # Replace these variables with your own values
-        api_key = "AUN1ZO2ZXPC9N0JW"
+        api_key = "replace_it_here"
         # stock_symbol = "AAPL"
         interval = "1min"
         stock_symbol = request.args.get('stock_name')
