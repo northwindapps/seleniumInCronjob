@@ -56,7 +56,7 @@ def get_price():
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(options=options)
         
-        url = "https://www.google.com/search?q="
+        #url = "https://www.google.com/search?q="
         #query=stock_name + '+stock price' 
         #url = url + query
 
@@ -73,11 +73,10 @@ def get_price():
 
         elif stock_type == '1':
             print("stock")
-            query=stock_name + '+stock price'
+            query=stock_name + 'stock price'
             url = url + query
-            print(url)
             driver.get(url)
-            pc_price_tag = driver.find_element(By.XPATH, "//span[@jsname='vWLAgc']")
+            pc_price_tag = driver.find_element(By.CLASS_NAME, 'pclqee')
         else:
             print("Invalid choice.")
             pc_price_tag = None
@@ -116,9 +115,6 @@ def get_price():
 
     finally:
         # Close the browser when done
-        if 'driver' in locals():
-            driver.quit()
-            print('driver quit')
         print('end')
 
 def is_float(string):

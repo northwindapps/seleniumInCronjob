@@ -19,3 +19,6 @@ PASS=パスワード
 app.py
 
 start: gunicorn app:app
+ps aux |grep gunicorn | awk '{ print $2 }' |xargs kill -HUP
+sudo gunicorn  wsgi
+
